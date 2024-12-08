@@ -1,0 +1,17 @@
+drop function if exists years_since;
+delimiter $$
+create function years_since(year INT)
+    returns int
+    deterministic
+begin
+    return timestampdiff(YEAR, makedate(year, 1), curdate());
+end$$
+delimiter ;
+
+SELECT
+	Year,
+    makedate(Year, 1) as January,
+    curdate() as 'Current date',
+    years_since(Year)
+FROM
+	cases;

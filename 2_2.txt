@@ -1,0 +1,88 @@
+-- Countries
+INSERT INTO country (entity, code)
+SELECT DISTINCT Entity, Code
+FROM infectious_cases;
+
+-- Diseases
+INSERT INTO disease (name)
+SELECT DISTINCT 'Polio' AS name
+FROM infectious_cases
+WHERE polio_cases != ""
+UNION
+SELECT DISTINCT 'Guinea Worm' AS name
+FROM infectious_cases
+WHERE cases_guinea_worm != ""
+UNION
+SELECT DISTINCT 'Rabies' AS name
+FROM infectious_cases
+WHERE Number_rabies != ""
+UNION
+SELECT DISTINCT 'Malaria' AS name
+FROM infectious_cases
+WHERE Number_malaria != ""
+UNION
+SELECT DISTINCT 'HIV' AS name
+FROM infectious_cases
+WHERE Number_hiv != ""
+UNION
+SELECT DISTINCT 'Tuberculosis' AS name
+FROM infectious_cases
+WHERE Number_tuberculosis != ""
+UNION
+SELECT DISTINCT 'Smallpox' AS name
+FROM infectious_cases
+WHERE Number_smallpox != ""
+UNION
+SELECT DISTINCT 'Cholera' AS name
+FROM infectious_cases
+WHERE Number_cholera_cases != "";
+
+-- Cases data
+INSERT IGNORE INTO cases (country_id, year, disease_id, number)
+	SELECT c.id, ic.Year, d.id, ic.polio_cases as dis
+	FROM infectious_cases ic
+    INNER JOIN country c ON c.entity = ic.entity
+    INNER JOIN disease d ON d.name = "Polio"
+	HAVING dis != ""
+UNION
+	SELECT c.id, ic.Year, d.id, ic.cases_guinea_worm as dis
+	FROM infectious_cases ic
+    INNER JOIN country c ON c.entity = ic.entity
+    INNER JOIN disease d ON d.name = "Guinea Worm"
+	HAVING dis != ""
+UNION
+	SELECT c.id, ic.Year, d.id, ic.Number_rabies as dis
+	FROM infectious_cases ic
+    INNER JOIN country c ON c.entity = ic.entity
+    INNER JOIN disease d ON d.name = "Rabies"
+	HAVING dis != ""
+UNION
+	SELECT c.id, ic.Year, d.id, ic.Number_malaria as dis
+	FROM infectious_cases ic
+    INNER JOIN country c ON c.entity = ic.entity
+    INNER JOIN disease d ON d.name = "Malaria"
+	HAVING dis != ""
+UNION
+	SELECT c.id, ic.Year, d.id, ic.Number_hiv as dis
+	FROM infectious_cases ic
+    INNER JOIN country c ON c.entity = ic.entity
+    INNER JOIN disease d ON d.name = "HIV"
+	HAVING dis != ""
+UNION
+	SELECT c.id, ic.Year, d.id, ic.Number_tuberculosis as dis
+	FROM infectious_cases ic
+    INNER JOIN country c ON c.entity = ic.entity
+    INNER JOIN disease d ON d.name = "Tuberculosis"
+	HAVING dis != ""
+UNION
+	SELECT c.id, ic.Year, d.id, ic.Number_smallpox as dis
+	FROM infectious_cases ic
+    INNER JOIN country c ON c.entity = ic.entity
+    INNER JOIN disease d ON d.name = "Smallpox"
+	HAVING dis != ""
+UNION
+	SELECT c.id, ic.Year, d.id, ic.Number_cholera_cases as dis
+	FROM infectious_cases ic
+    INNER JOIN country c ON c.entity = ic.entity
+    INNER JOIN disease d ON d.name = "Cholera"
+	HAVING dis != "";

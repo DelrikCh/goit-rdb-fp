@@ -1,0 +1,7 @@
+SELECT
+	Year,
+    makedate(Year, 1) as January,
+    curdate() as 'Current date',
+    timestampdiff(YEAR, makedate(Year,1), curdate())
+FROM
+	cases;

@@ -1,0 +1,14 @@
+SELECT
+	AVG(number) AS average,
+    MIN(number) AS minimum,
+    MAX(number) AS maximum,
+    SUM(number) AS sum
+FROM
+	cases
+WHERE
+	(SELECT id FROM disease WHERE name = "Rabies") = disease_id
+GROUP BY
+	country_id
+ORDER BY
+	average DESC
+LIMIT 10;
